@@ -9,7 +9,6 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /ServerData/
-
 /[Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size.
@@ -72,3 +71,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+*.hash
+ServerData/Android/catalog_0.1.0.hash
+ServerData/Android/catalog_0.1.0.json

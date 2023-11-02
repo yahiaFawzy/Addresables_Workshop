@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: b15e26c2103875540a8a5777906a1d51
   m_SerializeEntries:
   - m_GUID: 710d84b2742e6aa418331946ebd2b787
-    m_Address: Assets/Scenes/RemoteTruck.unity
+    m_Address: R/Assets/Scenes/RemoteTruck.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
