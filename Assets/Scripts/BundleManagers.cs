@@ -28,33 +28,13 @@ public class BundleManagers : MonoBehaviour
 
     private void CatalogUpdateCallBack(CatalogUpdater.CatlaogueUpdateResult result)
     {
-
-        // Addressables.InitializeAsync().Completed+=(AsyncOperationHandle<IResourceLocator> resourceLocator) => {
-          //   var catalog = resourceLocator.Result;
-             var catalog = Addressables.ResourceLocators;
-          //   Debug.Log(catalog.LocatorId);
-          //   IList<IResourceLocation> locations;
-
-             // Iterate over all of the keys in the catalog.
-             //foreach (var key in catalog)
-           //  {                 
-                 //catalog.Locate(key, typeof(object), out locations);
-
-
-                 // Get the resource locator for the key.
-                 foreach (var location in catalog)
-                 {
-                    foreach (var key in location.Keys)
-                    {
-                            Debug.Log("key " + key.ToString());
-                    }
-                 }
-             //}
-
-         //};
-
+        List<String> keys = AddresableHelpers.GetRemoteBundlesKey();
+        for (int i = 0; i < keys.Count; i++) {
+            Debug.Log("key " +i + " : " +keys[i]);
+        }
     }
 
+   
 
 
 
