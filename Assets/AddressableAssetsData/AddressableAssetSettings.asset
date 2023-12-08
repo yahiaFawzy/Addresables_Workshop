@@ -70,6 +70,8 @@ MonoBehaviour:
         m_Value: ServerData/[BuildTarget]
       - m_Id: 153c4c3c5183ca942ac9b35401dd0494
         m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+      - m_Id: 7a9d07a4e995de142b47d422e58c0309
+        m_Value: D:/Yahia/AddresableWorkShop/Assets
     - m_InheritedParent: 
       m_Id: 6d07a087a0876534abd70637d86df525
       m_ProfileName: Dev
@@ -84,6 +86,8 @@ MonoBehaviour:
         m_Value: ServerData/[BuildTarget]
       - m_Id: 153c4c3c5183ca942ac9b35401dd0494
         m_Value: '{StaticLoadPath.BundleLoadPath}/[BuildTarget]'
+      - m_Id: 7a9d07a4e995de142b47d422e58c0309
+        m_Value: D:/Yahia/AddresableWorkShop/Assets
     m_ProfileEntryNames:
     - m_Id: ea75a756f92bf8c48891c05213bbd739
       m_Name: BuildTarget
@@ -99,6 +103,9 @@ MonoBehaviour:
       m_InlineUsage: 0
     - m_Id: 153c4c3c5183ca942ac9b35401dd0494
       m_Name: Remote.LoadPath
+      m_InlineUsage: 0
+    - m_Id: 7a9d07a4e995de142b47d422e58c0309
+      m_Name: RemoteLoadPath
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:

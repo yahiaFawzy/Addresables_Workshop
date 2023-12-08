@@ -1,9 +1,11 @@
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Collections.Generic;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using System;
+using System.Threading.Tasks;
+using UnityEngine.AddressableAssets;
+using System.Linq;
 /// <summary>
 /// In this script, Addressables.CheckForCatalogUpdates is used to check if there are updates available for any catalogs. 
 /// If updates are available, it logs the number of catalogs that need to be updated and then calls Addressables.UpdateCatalogs to update those catalogs.
@@ -39,6 +41,38 @@ public class CatalogUpdater
             Debug.Log("Failed to check for catalog updates.");
             onUpdateFinished?.Invoke(CatlaogueUpdateResult.FailToCheckUpdates);
         }
+
+    }
+
+    private async Task<List<string>> GetListOfUpdatedBundles()
+    {
+        var handle = Addressables.CheckForCatalogUpdates(false);
+
+        await handle.Task; // Await the completion of the async operation
+
+        List<string> ListOfUpdatedBundlesNames = new List<string>();
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            foreach (var locator in handle.Result)
+            {
+                string bundleAddress = locator;
+
+                // Check if the bundle was updated or added
+                if (bundleAddress.Length > 0)
+                {
+                    // Bundle was updated or added, add it to the list
+                    ListOfUpdatedBundlesNames.Add(bundleAddress);
+                }
+                else
+                {
+                    // Bundle was deleted, remove its cached data
+                    Addressables.ResourceManager.a(deletedLocator);
+                }
+            }
+        }
+
+        Addressables.Release(handle); // Release the handle to free up resources
+        return ListOfUpdatedBundlesNames;
     }
 
     void OnCatalogsUpdated(AsyncOperationHandle<List<IResourceLocator>> handle)
@@ -57,7 +91,16 @@ public class CatalogUpdater
         }
     }
 
-    public enum CatlaogueUpdateResult { 
-      FailToCheckUpdates,FailToUpDates,NoUpdatesAvaliable,Updated
+
+    private void RemoveBundleFromCache(string bundleAddress)
+    {
+        Caching.ClearAllCachedVersions(bundleAddress);
     }
+
+}
+
+
+public enum CatlaogueUpdateResult
+{
+    FailToCheckUpdates, FailToUpDates, NoUpdatesAvaliable, Updated
 }
