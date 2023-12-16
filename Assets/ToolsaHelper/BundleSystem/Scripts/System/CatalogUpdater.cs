@@ -5,7 +5,6 @@ using UnityEngine.AddressableAssets.ResourceLocators;
 using System;
 using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
-using System.Linq;
 /// <summary>
 /// In this script, Addressables.CheckForCatalogUpdates is used to check if there are updates available for any catalogs. 
 /// If updates are available, it logs the number of catalogs that need to be updated and then calls Addressables.UpdateCatalogs to update those catalogs.
@@ -24,27 +23,34 @@ public class CatalogUpdater
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
+            LogUpdatedBundleKeys(handle);
             List<string> catalogsToUpdate = handle.Result;
             if (catalogsToUpdate != null && catalogsToUpdate.Count > 0)
             {
-                Debug.Log("Updates available for " + catalogsToUpdate.Count + " catalogs. Updating now...");
+                Debuger.Log(this,"Updates available for " + catalogsToUpdate.Count + " catalogs. Updating now...");
                 Addressables.UpdateCatalogs(catalogsToUpdate, false).Completed += OnCatalogsUpdated;
             }
             else
             {
-                Debug.Log("No updates available.");
+                Debuger.Log(this,"No updates available.");
                 onUpdateFinished?.Invoke(CatlaogueUpdateResult.NoUpdatesAvaliable);
             }
         }
         else
         {
-            Debug.Log("Failed to check for catalog updates.");
+            Debuger.Log(this,"Failed to check for catalog updates.");
             onUpdateFinished?.Invoke(CatlaogueUpdateResult.FailToCheckUpdates);
         }
 
     }
 
-    private async Task<List<string>> GetListOfUpdatedBundles()
+    private void LogUpdatedBundleKeys(AsyncOperationHandle<List<string>> handle) {
+        for(int i=0;i<handle.Result.Count;i++)
+        Debug.Log($"bundle with key { handle.Result[i] } is updated");
+    }
+
+
+    public async Task<List<string>> GetListOfUpdatedBundles()
     {
         var handle = Addressables.CheckForCatalogUpdates(false);
 
@@ -64,9 +70,8 @@ public class CatalogUpdater
                     ListOfUpdatedBundlesNames.Add(bundleAddress);
                 }
                 else
-                {
-                    // Bundle was deleted, remove its cached data
-                    Addressables.ResourceManager.a(deletedLocator);
+                {                 
+                    
                 }
             }
         }
@@ -92,13 +97,18 @@ public class CatalogUpdater
     }
 
 
-    private void RemoveBundleFromCache(string bundleAddress)
-    {
-        Caching.ClearAllCachedVersions(bundleAddress);
-    }
+   
 
 }
 
+public class BundleUpdatesData {
+    public string bundleName;
+    public BundleUpdateType updateType;
+}
+
+public enum BundleUpdateType { 
+ Added,Updated,Removed
+}
 
 public enum CatlaogueUpdateResult
 {
