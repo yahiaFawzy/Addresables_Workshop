@@ -12,14 +12,14 @@ using UnityEngine.AddressableAssets;
 /// </summary>
 public class CatalogUpdater
 {
-    public Action<CatlaogueUpdateResult> onUpdateFinished;
+    public Action<CatlaogueUpdateResult, List<IResourceLocator>> onUpdateFinished;
 
     public void CheckForCatalogUpdates()
     {
         Addressables.CheckForCatalogUpdates(false).Completed += OnCheckForCatalogUpdatesCompleted;
     }
 
-    void OnCheckForCatalogUpdatesCompleted(AsyncOperationHandle<List<string>> handle)
+    void OnCheckForCatalogUpdatesCompleted(AsyncOperationHandle<List<string>> handle) //list of updated catalog
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
@@ -33,13 +33,13 @@ public class CatalogUpdater
             else
             {
                 Debuger.Log(this,"No updates available.");
-                onUpdateFinished?.Invoke(CatlaogueUpdateResult.NoUpdatesAvaliable);
+                onUpdateFinished?.Invoke(CatlaogueUpdateResult.NoUpdatesAvaliable,null);
             }
         }
         else
         {
             Debuger.Log(this,"Failed to check for catalog updates.");
-            onUpdateFinished?.Invoke(CatlaogueUpdateResult.FailToCheckUpdates);
+            onUpdateFinished?.Invoke(CatlaogueUpdateResult.FailToCheckUpdates,null);
         }
 
     }
@@ -85,13 +85,13 @@ public class CatalogUpdater
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             Debug.Log("Catalogs updated successfully.");
-            onUpdateFinished?.Invoke(CatlaogueUpdateResult.Updated);
+            onUpdateFinished?.Invoke(CatlaogueUpdateResult.Updated, handle.Result);
             // Here you can trigger any actions that should happen after the catalogs are updated.
             // For example, you might want to reload any assets that were updated.
         }
         else
         {
-            onUpdateFinished?.Invoke(CatlaogueUpdateResult.FailToUpDates);
+            onUpdateFinished?.Invoke(CatlaogueUpdateResult.FailToUpDates,handle.Result);
             Debug.Log("Failed to update catalogs.");
         }
     }
