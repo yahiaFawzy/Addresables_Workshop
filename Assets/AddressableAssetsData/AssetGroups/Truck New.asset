@@ -10,15 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Truck Scene
+  m_Name: Truck New
   m_EditorClassIdentifier: 
-  m_GroupName: Truck Scene
+  m_GroupName: Truck New
   m_Data:
     m_SerializedData: []
-  m_GUID: b15e26c2103875540a8a5777906a1d51
+  m_GUID: 7d04b71365157a14c9161a764ebce97f
   m_SerializeEntries:
-  - m_GUID: 710d84b2742e6aa418331946ebd2b787
-    m_Address: Assets/Scenes/Remote/RemoteTruck.unity
+  - m_GUID: 47b74e22db1dd594fb9b7dc8e877daff
+    m_Address: Assets/Scenes/Remote/RemoteTruck New2.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 31772d17d880fbc4b86ca2185a1e27d1
+    m_Address: Assets/Scenes/Remote/RemoteTruck New.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -26,5 +31,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: d9c017b92f3bf5b49b998af89af1c58a, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: d04c6ded2445a344abe202287704fc60, type: 2}
-    - {fileID: 11400000, guid: c44b2594e2397b8458a2fbaa827ff352, type: 2}
+    - {fileID: 11400000, guid: 1dae2a07227321647a2a422f8087ecdd, type: 2}
+    - {fileID: 11400000, guid: c58e079bba1549645ad7b756a1fb1256, type: 2}

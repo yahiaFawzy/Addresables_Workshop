@@ -20,8 +20,7 @@ MonoBehaviour:
   - m_GUID: 141e335e4cdb036458f8c0d7e5ad2e82
     m_Address: Assets/Scenes/Remote/RemoteCar.unity
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Remote
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d9c017b92f3bf5b49b998af89af1c58a, type: 2}

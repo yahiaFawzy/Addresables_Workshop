@@ -12,44 +12,37 @@ public class BundleManagers : MonoBehaviour
     //2- update palyer prefs of updates 
     //3- download updates bundle using AssestBundleDownloader.cs
     //4- cash bundle ,clear bundle cash
-
+    public Action OnCatalogUpdated;
     AddressablesDownloader addressablesDownloader;
+    CatalogUpdater catalogUpdater;
 
     void Start()
     {
         CheckForCatalogUpdates();
-        //addressablesDownloader = new AddressablesDownloader(this);
+        addressablesDownloader = new AddressablesDownloader(this);
     }
        
 
     //does we add new asset , remove one , update content of one 
     void CheckForCatalogUpdates()
     {
-        CatalogUpdater catalogUpdater = new CatalogUpdater();
+        catalogUpdater = new CatalogUpdater();
         catalogUpdater.onUpdateFinished += CatalogUpdateCallBackListener; 
         catalogUpdater.CheckForCatalogUpdates();
     }
 
-    private void CatalogUpdateCallBackListener(CatlaogueUpdateResult catlaogueUpdateResult, List<IResourceLocator> handle = null)
+    private async void CatalogUpdateCallBackListener(CatlaogueUpdateResult catlaogueUpdateResult, List<IResourceLocator> handle = null)
     {
-        AddresableHelpers.LogBundlesKeys(this, new List<IResourceLocator>(Addressables.ResourceLocators));
-
         if (catlaogueUpdateResult == CatlaogueUpdateResult.Updated)
         {
-            SignUpdatesKeysAsUnCashed(handle);
+            //sign updated bundles as uncashed
+            var list = await catalogUpdater.GetListOfUpdatedBundles();
+            AddresableHelpers.SignUpdatesKeysAsUnCashed(list);
         }
+        OnCatalogUpdated?.Invoke();
     }
   
-    private void SignUpdatesKeysAsUnCashed(List<IResourceLocator> handle)
-    {
-        List<string> keys = AddresableHelpers.GetRemoteBundlesKey(handle);
-
-        for (int i = 0; i < keys.Count; i++)
-        {
-            //flag it as un cashed
-            PlayerPrefs.SetInt(keys[i],(int)CashStatus.NotCased);
-        }
-    }
+  
 
     public void DownloadBundle(string key,IBundleCallBack bundleCallBack) {
         if (addressablesDownloader.isDownloading)

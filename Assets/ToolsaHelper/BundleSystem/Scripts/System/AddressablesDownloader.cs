@@ -21,7 +21,7 @@ public class AddressablesDownloader
     {
         if (!isDownloading)
         {
-            Debuger.Log(this, "bundle start downloading");
+            Debuger.Log(this, "bundle start downloading"+ bundleKey);
             context.StartCoroutine(DownloadBundleIE(bundleKey));
             return isDownloading;
         }
@@ -48,7 +48,7 @@ public class AddressablesDownloader
             OnDownloadProgress?.Invoke(key, downloadedSizeMB ,totalSizeMB, progress);
             yield return null;
         }
-
+        PlayerPrefs.SetInt(key, (int)CashStatus.cased);
         isDownloading = false;
         OnDownloadFinish?.Invoke();
         Addressables.Release(handle);
